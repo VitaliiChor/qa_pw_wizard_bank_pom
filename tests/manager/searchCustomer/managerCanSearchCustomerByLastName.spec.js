@@ -45,5 +45,5 @@ const addCustomerPage = new AddCustomerPage(page)
 
 await addCustomerPage.clickOnCustomersButton()
 
-await addCustomerPage.searchCustomerByFirstName(customer.lastName)
+await addCustomerPage.searchCustomerByLastName(customer.lastName)
 });
