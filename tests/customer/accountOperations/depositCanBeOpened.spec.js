@@ -36,6 +36,7 @@ await accountPage.fillAmountInputField(amount);
 await accountPage.clickDepositFormButton();
 
 await accountPage.assertDepositSuccessfulMessageIsVisible();
+await accountPage.assertDepositAdded(amount)
 
 await accountPage.clickTransactionsButton();
 
