@@ -1,10 +1,9 @@
 import { test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
 
-let firstName;
-let lastName;
-let postalCode; 
 
+let customer;
 test.beforeEach( async ({ page }) => {
   /* 
   Pre-conditons:
@@ -13,12 +12,23 @@ test.beforeEach( async ({ page }) => {
   3. Fill the Last Name.
   4. Fill the Postal Code.
   5. Click [Add Customer].
+  6. Reload the page (This is a simplified step to close the popup).
   */
 
-  firstName = faker.person.firstName();
-  lastName = faker.person.lastName();
-  postalCode = faker.location.zipCode(); 
+  const addCustomerPage = new AddCustomerPage(page)
 
+ customer = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    postCode: faker.location.zipCode(),
+  };
+
+  await addCustomerPage.open()
+  await addCustomerPage.fillCustomerFirstName(customer.firstName)
+  await addCustomerPage.fillCustomerLastName(customer.lastName)
+  await addCustomerPage.fillCustomerPostCode(customer.postCode)
+  await addCustomerPage.clickAddCustomerButton()
+  await addCustomerPage.reloadPage()
 
 });
 
@@ -31,5 +41,9 @@ Test:
 4. Assert no other rows is present in the table.
 */
 
+const addCustomerPage = new AddCustomerPage(page)
 
+await addCustomerPage.clickOnCustomersButton()
+
+await addCustomerPage.searchCustomerByFirstName(customer.lastName)
 });
